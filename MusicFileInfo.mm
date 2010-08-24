@@ -50,7 +50,9 @@
 		if (fileRef.file() == nil)
 			return nil;
 		
+
 		TagLib::Tag *tag = fileRef.tag();
+		
 		self.title = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
 														   tag->title().toCString(), 
 														   encoding);

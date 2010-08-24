@@ -16,6 +16,7 @@
 	IBOutlet NSTableView *tableView;
 	IBOutlet NSButton *preview;
 	IBOutlet NSButton *confirm;
+	IBOutlet NSPopUpButton *btnEncodingCatalog;
 	IBOutlet NSPopUpButton *btnEncoding;
 	IBOutlet NSMenu *mEncoding;
 	IBOutlet NSMenuItem *miEncoding;
@@ -29,6 +30,7 @@
 - (IBAction)preview:(id)sender;
 - (IBAction)convert:(id)sender;
 - (IBAction)chooseEncoding:(id)sender;
+- (IBAction)chooseCatalog:(id)sender;
 
 - (void)initEncodingMenu;
 - (void)initEncodingPopUpButton;

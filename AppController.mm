@@ -8,6 +8,7 @@
 
 #import "AppController.h"
 #import "MusicFileInfo.h"
+#import "CharacterEncoding.h"
 
 @implementation AppController
 
@@ -22,6 +23,9 @@
 	
 	// Initialize Encoding Popup Button 
 	[self initEncodingPopUpButton];
+	
+	[btnEncodingCatalog selectItemWithTag:C_SIMPLIFIED_CHINESE];
+	[self chooseCatalog:btnEncodingCatalog];
 	
 }
 
@@ -204,91 +208,30 @@
  */
 - (void)initEncodingMenu
 {
-	
 	NSMenuItem *newItem;
+	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
 	
 	[mEncoding setAutoenablesItems:NO];
 	
-	// Simplified Chinese Submenu
-	NSMenuItem *spChineseItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-								  initWithTitle:NSLocalizedString(@"MENU_ENCODING_ITEM_SIMPLIFIED_CHINESE",@"Simplified Chinese") 
-								  action:nil
-								  keyEquivalent:@""] autorelease];
-	NSMenu *mspChinese = [[[NSMenu allocWithZone:[NSMenu menuZone]] 
-						   initWithTitle:NSLocalizedString(@"MENU_ENCODING_SUBMENU_SIMPLIFIED_CHINESE",@"Simplified Chinese")] 
-						  autorelease];
-	//[mspChinese setAutoenablesItems:NO];
-	[spChineseItem setSubmenu:mspChinese];
-	
-	//	// GBK
-	//	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"GBK"
-	//																	action:@selector(chooseEncoding:)
-	//															 keyEquivalent:@""] autorelease];
-	//	[newItem setTag:kCFStringEncodingGBK_95];
-	//	[newItem setTarget:self];
-	//	[mspChinese addItem:newItem];
-	
-	//	// GB2312
-	//	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"GB2312"
-	//																	action:@selector(chooseEncoding:)
-	//															 keyEquivalent:@""] autorelease];
-	//	[newItem setTag:kCFStringEncodingGB_2312_80];
-	//	[newItem setTarget:self];
-	//	[mspChinese addItem:newItem];
-	//
-	// GB18030
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"MENU_ENCODING_ITEM_SIMPLIFIED_CHINESE",@"GB18030")
-				action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingGB_18030_2000];
-	[newItem setTarget:self];
-	[mspChinese addItem:newItem];
-	
-	[mEncoding addItem:spChineseItem];
-	
-	// Traditional Chinese Submenu
-	NSMenuItem *tcChineseItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]]
-								  initWithTitle:NSLocalizedString(@"MENU_ENCODING_SUBMENU_TRADITIONAL_CHINESE",@"Traditional Chinese") 
-								  action:@selector(chooseEncoding:)
-								  keyEquivalent:@""] autorelease];
-	
-	NSMenu *mtcChinese = [[[NSMenu allocWithZone:[NSMenu menuZone]] 
-						   initWithTitle:NSLocalizedString(@"MENU_ENCODING_SUBMENU_TRADITIONAL_CHINESE",@"Traditional Chinese")] 
-						  autorelease];
-	[tcChineseItem setSubmenu:mtcChinese];
-	
-	// Big5
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"MENU_ENCODING_ITEM_TRADITIONAL_CHINESE_COMMON",@"Common")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5];
-	[newItem setTarget:self];
-	[mtcChinese addItem:newItem];
-	
-	// Big5_TW
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"MENU_ENCODING_ITEM_TRADITIONAL_CHINESE_TAIWAN",@"Taiwan")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5_E];
-	[newItem setTarget:self];
-	[mtcChinese addItem:newItem];
-	
-	
-	// Big5_HK
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"MENU_ENCODING_ITEM_TRADITIONAL_CHINESE_HK",@"HongKong")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5_HKSCS_1999];
-	[newItem setTarget:self];
-	[mtcChinese addItem:newItem];
-	
-	
-	[mEncoding addItem:tcChineseItem];
-	
+	for (CharacterCatalog *c in [CharacterCatalog catalogs]) {
+		NSMenuItem *menuItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] init];
+		[menuItem setTitle:[c description]];
+		[menuItem setTag:[c catalogValue]];
+		
+		NSMenu *menu = [[NSMenu allocWithZone:[NSMenu menuZone]] initWithTitle:[c description]];
+		[menuItem setSubmenu:menu];
+		
+		for (CharacterEncoding *e in [util encodings:[c catalogValue]]) {
+			newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[e description]
+																		   action:@selector(chooseEncoding:) 
+																	keyEquivalent:@""];
+			[newItem setTag:[e encodingCode]];
+			[newItem setTarget:self];
+			[menu addItem:newItem];
+		}
+		
+		[mEncoding addItem:menuItem];
+	}
 }
 
 /*!
@@ -301,74 +244,49 @@
 	
 	NSMenuItem *newItem;
 	
-	// empty option
-	//	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"Please choose encoding"
-	//																	action:@selector(chooseEncoding:)
-	//															 keyEquivalent:@""] autorelease];
-	//	[newItem setTag:0];
-	//	[newItem setTarget:self];
-	//	[[btnEncoding menu] addItem:newItem];
+	for (CharacterCatalog *c in [CharacterCatalog catalogs]) 
+	{
+		newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[c description]
+																		action:@selector(chooseCatalog:)
+																 keyEquivalent:@""];
+		[newItem setTarget:self];
+		[newItem setTag:[c catalogValue]];
+		[[btnEncodingCatalog menu] addItem:newItem];
+	}
+	[btnEncodingCatalog sizeToFit];
 	
-	// GB18030
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"POPUPBTN_OPTION_SIMPLIFIED_CHINESE",@"Simplified Chinese")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingGB_18030_2000];
-	[newItem setTarget:self];
-	[[btnEncoding menu] addItem:newItem];
-	
-	//	// GB2312
-	//	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"GB2312"
-	//																	action:@selector(chooseEncoding:)
-	//															 keyEquivalent:@""] autorelease];
-	//	[newItem setTag:kCFStringEncodingGB_2312_80];
-	//	[newItem setTarget:self];
-	//	[[btnEncoding menu] addItem:newItem];
-	//	
-	//	// GBK
-	//	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"GBK"
-	//																	action:@selector(chooseEncoding:)
-	//															 keyEquivalent:@""] autorelease];
-	//	[newItem setTag:kCFStringEncodingGBK_95];
-	//	[newItem setTarget:self];
-	//	[[btnEncoding menu] addItem:newItem];
-	
-	// Big5
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"POPUPBTN_OPTION_TRADITIONAL_CHINESE_COMMON", @"Traditional Chinese")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5];
-	[newItem setTarget:self];
-	[[btnEncoding menu] addItem:newItem];
-	
-	// Big5_TW
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"POPUPBTN_OPTION_TRADITIONAL_CHINESE_TAIWAN",@"Traditional Chinese -- Taiwan")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5_E];
-	[newItem setTarget:self];
-	[[btnEncoding menu] addItem:newItem];
-	
-	// Big5_HK
-	newItem = [[[NSMenuItem allocWithZone:[NSMenu menuZone]] 
-				initWithTitle:NSLocalizedString(@"POPUPBTN_OPTION_TRADITIONAL_CHINESE_HK", @"Traditional Chinese -- HongKong")
-					   action:@selector(chooseEncoding:)
-				keyEquivalent:@""] autorelease];
-	[newItem setTag:kCFStringEncodingBig5_HKSCS_1999];
-	[newItem setTarget:self];
-	[[btnEncoding menu] addItem:newItem];
-	
-	[btnEncoding sizeToFit];
-	[self setEncoding:kCFStringEncodingGBK_95];
 }
 
 - (IBAction)chooseEncoding:(id)sender
 {
+	NSMenuItem *item = (NSMenuItem *)sender;
+	if ([item parentItem]) {
+		[btnEncodingCatalog selectItemWithTag:[[item parentItem] tag]];
+		[self chooseCatalog:[item parentItem]];
+	}
 	[btnEncoding selectItemWithTag:[(NSMenuItem *)sender tag]];
 	[self setEncoding:[(NSMenuItem *)sender tag]];
+}
+
+- (IBAction)chooseCatalog:(id)sender
+{
+	[[btnEncoding menu] removeAllItems];
+	
+	NSMenuItem *newItem;
+	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
+	
+	NSInteger aValue = [(NSMenuItem *)sender tag];
+	for (CharacterEncoding *e in [util encodings:aValue]) {
+		newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[e description]
+																	   action:@selector(chooseEncoding:)
+																 keyEquivalent:@""];
+		[newItem setTag:[e encodingCode]];
+		[newItem setTarget:self];
+		[[btnEncoding menu] addItem:newItem];
+	}
+	
+	[btnEncoding sizeToFit];
+	[self chooseEncoding:[btnEncoding itemAtIndex:0]];
 }
 
 @end

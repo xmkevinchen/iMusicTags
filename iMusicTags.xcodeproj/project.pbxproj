@@ -14,6 +14,7 @@
 		0AA71224121D8015007D755C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0AA71222121D8015007D755C /* Localizable.strings */; };
 		0ACC097011F90DB000111606 /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0ACC096F11F90DB000111606 /* TagLib.framework */; };
 		0ACC097311F90DBF00111606 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0ACC096F11F90DB000111606 /* TagLib.framework */; };
+		0AE29D9A12240655005C154A /* CharacterEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE29D9912240655005C154A /* CharacterEncoding.m */; };
 		256AC3DA0F4B6AC300CF3369 /* Mp3ID3TagDemoAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* Mp3ID3TagDemoAppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
@@ -41,10 +42,10 @@
 		0A2CCF5F11F9AA7D00CB3746 /* AppController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = AppController.mm; sourceTree = "<group>"; };
 		0A2CCF6211F9AABB00CB3746 /* MusicFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicFileInfo.h; sourceTree = "<group>"; };
 		0A2CCF6311F9AABB00CB3746 /* MusicFileInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MusicFileInfo.mm; sourceTree = "<group>"; };
-		0AA7121E121D7EEB007D755C /* Simplified Chinese */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = "Simplified Chinese"; path = "Simplified Chinese.lproj/MainMenu.xib"; sourceTree = "<group>"; };
 		0AA71223121D8015007D755C /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
-		0AA71225121D804D007D755C /* Simplified Chinese */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "Simplified Chinese"; path = "Simplified Chinese.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		0ACC096F11F90DB000111606 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = /Users/kevin/Desktop/TagLib.framework; sourceTree = "<absolute>"; };
+		0ACC096F11F90DB000111606 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = /Library/Frameworks/TagLib.framework; sourceTree = "<absolute>"; };
+		0AE29D9812240655005C154A /* CharacterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterEncoding.h; sourceTree = "<group>"; };
+		0AE29D9912240655005C154A /* CharacterEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharacterEncoding.m; sourceTree = "<group>"; };
 		0AEDD07E11F9D7FC005E2B4B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
@@ -81,6 +82,8 @@
 				256AC3D90F4B6AC300CF3369 /* Mp3ID3TagDemoAppDelegate.m */,
 				0A2CCF5E11F9AA7D00CB3746 /* AppController.h */,
 				0A2CCF5F11F9AA7D00CB3746 /* AppController.mm */,
+				0AE29D9812240655005C154A /* CharacterEncoding.h */,
+				0AE29D9912240655005C154A /* CharacterEncoding.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -225,6 +228,7 @@
 				256AC3DA0F4B6AC300CF3369 /* Mp3ID3TagDemoAppDelegate.m in Sources */,
 				0A2CCF6011F9AA7D00CB3746 /* AppController.mm in Sources */,
 				0A2CCF6411F9AABB00CB3746 /* MusicFileInfo.mm in Sources */,
+				0AE29D9A12240655005C154A /* CharacterEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -243,7 +247,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				0AEDD07E11F9D7FC005E2B4B /* English */,
-				0AA7121E121D7EEB007D755C /* Simplified Chinese */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -252,7 +255,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				0AA71223121D8015007D755C /* English */,
-				0AA71225121D804D007D755C /* Simplified Chinese */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -312,6 +314,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
@@ -326,6 +329,7 @@
 			buildSettings = {
 				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_GC = required;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PREBINDING = NO;
