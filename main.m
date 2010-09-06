@@ -1,9 +1,9 @@
 //
 //  main.m
-//  Mp3ID3TagDemo
+//  iMusicTags
 //
 //  Created by Kevin Chen on 10-7-16.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Kevin Chen's workstation. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

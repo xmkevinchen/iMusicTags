@@ -1,81 +1,64 @@
 //
-//  MyAudioFile.m
-//  Mp3ID3TagDemo
+//  MusicFileInfo.m
+//  iMusicTags
 //
 //  Created by Kevin Chen on 10-7-23.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Kevin Chen's workstation. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import "MusicFileInfo.h"
 
+#import <TagLib/taglib.h>
+#import <TagLib/tag.h>
+#import <TagLib/fileref.h>
+#import <TagLib/tstring.h>
+#import <TagLib/mpegfile.h>
+#import <TagLib/id3v1tag.h>
+#import <TagLib/id3v2tag.h>
+
+
 @implementation MusicFileInfo
 
-
-- (id)initWithUrl:(NSURL *)fileUrl
+- (id)initWithUrl:(NSURL *)aUrl
 {
-	if ([super init]) {
-		TagLib::FileRef fileRef([[fileUrl path] UTF8String]);
-		
-		if (fileRef.file() == nil)
-			return nil;
-		
-		TagLib::Tag *tag = fileRef.tag();
-		self.title = [NSString stringWithCString:tag->title().toCString(true) 
-										encoding:NSUTF8StringEncoding];
-		self.album = [NSString stringWithCString:tag->album().toCString(true)
-										encoding:NSUTF8StringEncoding];
-		self.artist = [NSString stringWithCString:tag->artist().toCString(true)
-										 encoding:NSUTF8StringEncoding];
-		self.genre = [NSString stringWithCString:tag->genre().toCString(true)
-										encoding:NSUTF8StringEncoding];
-		self.year = tag->year();
-		self.track = tag->track();
-		
-		self.url = fileUrl;
-		
-		return self;
-		
-	}
-	
-	return nil;
-	
+	return [self initWithUrl:aUrl withEncoding:kCFStringEncodingUTF8];
 }
 
-- (id)initWithUrl:(NSURL *)fileUrl withEncoding:(CFStringEncoding)encoding
+- (id)initWithUrl:(NSURL *)aUrl withEncoding:(CFStringEncoding)anEncoding
 {
-	if ([super init]) {
-		TagLib::FileRef fileRef([[fileUrl path] UTF8String]);
+	self = [super init];
+	if (self) {
+		fileUrl = aUrl;
+		guessEncoding = anEncoding;
 		
-		if (fileRef.file() == nil)
+		TagLib::FileRef fileRef([[aUrl path] UTF8String]);
+		
+		if (fileRef.isNull()) {
 			return nil;
-		
-
+		}
 		TagLib::Tag *tag = fileRef.tag();
-		
-		self.title = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-														   tag->title().toCString(), 
-														   encoding);
-		self.album = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-														   tag->album().toCString(), 
-														   encoding);
-		self.artist = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-															tag->artist().toCString(), 
-															encoding);
-		self.genre = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-														   tag->genre().toCString(), 
-														   encoding);
-		self.url = fileUrl;
-		self.year = tag->year();
+		NSString *extension = [aUrl pathExtension];
+		if ([extension isEqualToString:@"mp3"]) {
+			[self mp3Info:aUrl encoding:anEncoding];
+		}
+				
 		self.track = tag->track();
-		
-		return self;
-		
+		self.year = tag->year();
 	}
-	
-	return nil;
+			
+	return self;
 }
 
+- (void)writeTags
+{
+		
+}
+
+- (void)writeTagsWithEncoding:(CFStringEncoding)anEncoding
+{
+	
+}
 - (void)dealloc
 {
 	[title release];
@@ -87,7 +70,7 @@
 
 - (NSUInteger)hash
 {
-	return [self.url hash];
+	return [self.fileUrl hash];
 }
 
 - (BOOL)isEqual:(id)object
@@ -96,55 +79,63 @@
 		return NO;
 	}
 	
-	if (nil == [(MusicFileInfo *)object url]) {
+	if (nil == [(MusicFileInfo *)object fileUrl]) {
 		return NO;
 	}
 	
-	return [self.url isEqual:[(MusicFileInfo *)object url]];
+	return [self.fileUrl isEqual:[(MusicFileInfo *)object fileUrl]];
 }
 
-- (void)writeTags:(CFStringEncoding)encoding
+- (void)mp3Info:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding
 {
-	if (nil == self.url) {
-		return;
+	TagLib::MPEG::File file([[aUrl path] UTF8String]);
+	
+	TagLib::Tag *tag;
+	
+	if ([self hasID3v2Tag:aUrl]) {
+		tag = file.ID3v2Tag();
+	}else {
+		tag = file.ID3v1Tag();
 	}
 	
-	// Use UTF-8 as the default encoding 
-	(TagLib::ID3v2::FrameFactory::instance())->setDefaultTextEncoding(TagLib::String::UTF8);
-	
-	TagLib::FileRef fileRef([[self.url path] UTF8String]);
-	TagLib::Tag *tag = fileRef.tag();
-	
-	// Title
-	NSString *sTitle = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-												tag->title().toCString(), 
-												encoding);
-	tag->setTitle(TagLib::String([sTitle UTF8String], TagLib::String::UTF8));
-	
-	// Artist
-	NSString *sArtist = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-															 tag->artist().toCString(), 
-															 encoding);
-	tag->setArtist(TagLib::String([sArtist UTF8String], TagLib::String::UTF8));
+	if (kCFStringEncodingUTF8 == anEncoding) {
+		self.title = [NSString stringWithCString:tag->title().toCString(true)
+										encoding:NSUTF8StringEncoding];
+		self.artist = [NSString stringWithCString:tag->artist().toCString(true)
+										 encoding:NSUTF8StringEncoding];
+		self.album = [NSString stringWithCString:tag->album().toCString(true)
+										encoding:NSUTF8StringEncoding];
+		self.genre = [NSString stringWithCString:tag->genre().toCString(true)
+										encoding:NSUTF8StringEncoding];
+	} else {
+		self.title = [NSString stringWithCString:tag->title().toCString()
+										encoding:CFStringConvertEncodingToNSStringEncoding(anEncoding)];
+		self.artist = [NSString stringWithCString:tag->artist().toCString()
+										 encoding:CFStringConvertEncodingToNSStringEncoding(anEncoding)];
 		
-	// Album
-	NSString *sAlbum = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-															 tag->album().toCString(), 
-															 encoding);
-	tag->setAlbum(TagLib::String([sAlbum UTF8String], TagLib::String::UTF8));
+		self.album = [NSString stringWithCString:tag->album().toCString()
+										encoding:CFStringConvertEncodingToNSStringEncoding(anEncoding)];
+		self.genre = [NSString stringWithCString:tag->genre().toCString()
+										encoding:CFStringConvertEncodingToNSStringEncoding(anEncoding)];
+	}
 	
-	// Genre
-	NSString *sGenre = (NSString *)CFStringCreateWithCString(kCFAllocatorDefault, 
-															tag->genre().toCString(), 
-															encoding);
-	tag->setGenre(TagLib::String([sGenre UTF8String], TagLib::String::UTF8));
-	
-	fileRef.save();
+
 }
 
-- (void)setAlbumArt:(NSImage *)image
+- (BOOL)hasID3v2Tag:(NSURL *)aUrl
 {
+	NSError *error;
+	NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:aUrl error:&error];
+	[fileHandle seekToFileOffset:0L];
+	NSData *data = [fileHandle readDataOfLength:3];
+	NSString *id3v2id = [[NSString alloc] initWithCString:(const char *)[data bytes]];
+	if ([id3v2id isEqual:@"ID3"]) {
+		[fileHandle closeFile];
+		return YES;
+	}
 	
+	[fileHandle closeFile];
+	return NO;
 }
 
 @synthesize title;
@@ -153,6 +144,6 @@
 @synthesize genre;
 @synthesize year;
 @synthesize track;
-@synthesize url;
+@synthesize fileUrl;
 
 @end

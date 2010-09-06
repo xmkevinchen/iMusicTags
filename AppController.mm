@@ -1,9 +1,9 @@
 //
 //  AppController.mm
-//  Mp3ID3TagDemo
+//  iMusicTags
 //
 //  Created by Kevin Chen on 10-7-23.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Kevin Chen's workstation. All rights reserved.
 //
 
 #import "AppController.h"
@@ -181,8 +181,8 @@
 	NSUInteger *index = indexBuff;
 	for (int i = 0; i < [selected count]; i++) {
 		MusicFileInfo *file = (MusicFileInfo *)[displayInfo objectAtIndex:*(index + i)];
-		[fileUrls removeObject:[file url]];
-		[fileSet removeObject:[file url]];
+		[fileUrls removeObject:file.fileUrl];
+		[fileSet removeObject:file.fileUrl];
 	}
 	[displayInfo removeObjectsAtIndexes:selected];
 	
@@ -194,7 +194,7 @@
 - (IBAction)convert:(id)sender
 {
 	for (id info in displayInfo) {
-		[(MusicFileInfo *)info writeTags:encoding];
+		[(MusicFileInfo *)info writeTagsWithEncoding:encoding];
 	}
 	[displayInfo removeAllObjects];
 	[fileUrls removeAllObjects];

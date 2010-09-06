@@ -1,17 +1,12 @@
 //
-//  MyAudioFile.h
-//  Mp3ID3TagDemo
+//  MusicFileInfo.h
+//  iMusicTags
 //
 //  Created by Kevin Chen on 10-7-23.
-//  Copyright 2010 __MyCompanyName__. All rights reserved.
+//  Copyright 2010 Kevin Chen's workstation. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "TagLib/taglib.h"
-#import "TagLib/tag.h"
-#import "TagLib/fileref.h"
-#import "TagLib/tstring.h"
-#import "TagLib/id3v2tag.h"
 
 @interface MusicFileInfo : NSObject {
 
@@ -19,22 +14,25 @@
 	NSString *artist;
 	NSString *album;
 	NSString *genre;
-	NSUInteger year;
-	NSUInteger track;
-	NSURL *url;
+	NSInteger year;
+	NSInteger track;
+	
+	NSURL *fileUrl;
+	CFStringEncoding guessEncoding;
 }
 
-- (id)initWithUrl:(NSURL *)fileUrl;
-- (id)initWithUrl:(NSURL *)fileUrl withEncoding:(CFStringEncoding)encoding;
-- (void)writeTags:(CFStringEncoding)encoding;
-- (void)setAlbumArt:(NSImage *)image;
+- (id)initWithUrl:(NSURL *)aUrl;
+- (id)initWithUrl:(NSURL *)aUrl withEncoding:(CFStringEncoding)anEncoding;
+
+- (void)mp3Info:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding;
+- (BOOL)hasID3v2Tag:(NSURL *)aUrl;
 
 @property (readwrite, copy) NSString *title;
 @property (readwrite, copy) NSString *artist;
 @property (readwrite, copy) NSString *album;
 @property (readwrite, copy) NSString *genre;
-@property NSUInteger year;
-@property NSUInteger track;
-@property (readwrite, assign) NSURL *url;
+@property (readwrite) NSInteger year;
+@property (readwrite) NSInteger track;
+@property (readwrite, copy) NSURL *fileUrl;
 
 @end
