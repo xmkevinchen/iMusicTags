@@ -24,9 +24,18 @@
 	// Initialize Encoding Popup Button 
 	[self initEncodingPopUpButton];
 	
-	[btnEncodingCatalog selectItemWithTag:C_SIMPLIFIED_CHINESE];
-	[self chooseCatalog:btnEncodingCatalog];
+	[btnEncodingCatalog selectItemWithTag:C_CATALOG_CHOOSE];
+	[self chooseCatalog:btnEncodingCatalog];	
+}
+
+- (id)init
+{
+	self = [super init];
+	if (self) {
+		encoding = kCFStringEncodingInvalidId;
+	}
 	
+	return self;
 }
 
 - (IBAction)open:(id)sender
@@ -151,6 +160,20 @@
 
 - (IBAction)preview:(id)sender
 {
+	if (encoding == kCFStringEncodingInvalidId) {
+		NSString *imageName = [[NSBundle mainBundle] pathForResource:@"iMusicTags" ofType:@"icns"];
+		NSImage* imageObj = [[NSImage alloc] initWithContentsOfFile:imageName];
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Pick up an Encoding, dude" defaultButton:@"Return"
+									   alternateButton:nil
+										   otherButton:nil
+							 informativeTextWithFormat:@"Please choose an encoding before preview music information"];
+		[alert setIcon:imageObj];
+		[alert runModal];
+		[alert release];
+		return;
+		
+	}
+	
 	[displayInfo release];
 	displayInfo = [[NSMutableArray alloc] init];
 	
@@ -193,13 +216,28 @@
 
 - (IBAction)convert:(id)sender
 {
-	for (id info in displayInfo) {
-		[(MusicFileInfo *)info writeTagsWithEncoding:encoding];
+	if (encoding == kCFStringEncodingInvalidId) {
+		NSString *imageName = [[NSBundle mainBundle] pathForResource:@"iMusicTags" ofType:@"icns"];
+		NSImage* imageObj = [[NSImage alloc] initWithContentsOfFile:imageName];
+		NSAlert *alert = [NSAlert alertWithMessageText:@"Pick up an Encoding, dude" defaultButton:@"Return"
+									   alternateButton:nil
+										   otherButton:nil
+							 informativeTextWithFormat:@"Please choose an encoding before convert music information"];
+		[alert setIcon:imageObj];
+		[alert runModal];
+		[alert release];
+		return;
 	}
+	
+	for (id info in displayInfo) {
+		[(MusicFileInfo *)info writeTags:encoding];
+	}
+	
 	[displayInfo removeAllObjects];
 	[fileUrls removeAllObjects];
 	[fileSet removeAllObjects];
 	[tableView reloadData];
+	
 	NSBeep();
 }
 
@@ -273,8 +311,14 @@
 	[[btnEncoding menu] removeAllItems];
 	
 	NSMenuItem *newItem;
-	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
 	
+	newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@""
+																   action:nil
+															keyEquivalent:@""];
+	[[btnEncoding menu] addItem:newItem];
+	
+	
+	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
 	NSInteger aValue = [(NSMenuItem *)sender tag];
 	for (CharacterEncoding *e in [util encodings:aValue]) {
 		newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[e description]
@@ -286,7 +330,6 @@
 	}
 	
 	[btnEncoding sizeToFit];
-	[self chooseEncoding:[btnEncoding itemAtIndex:0]];
 }
 
 @end

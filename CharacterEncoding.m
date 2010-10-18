@@ -53,6 +53,10 @@
 {
 	NSMutableArray *catalogs = [[NSMutableArray alloc] init];
 	
+	// Choose Catalog mention
+	[catalogs addObject:[[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
+													description:@""]];
+	
 	// Simplified Chinese
 	[catalogs addObject:[[CharacterCatalog alloc] initWithValue:C_SIMPLIFIED_CHINESE
 													description:@"Simplified Chinese"]];

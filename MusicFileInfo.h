@@ -23,8 +23,11 @@
 
 - (id)initWithUrl:(NSURL *)aUrl;
 - (id)initWithUrl:(NSURL *)aUrl withEncoding:(CFStringEncoding)anEncoding;
+- (void)writeTags;
+- (void)writeTags:(CFStringEncoding)anEncoding;
 
-- (void)mp3Info:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding;
+- (void)readMPEGInfo:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding;
+- (void)writeMPEGInfo:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding;
 - (BOOL)hasID3v2Tag:(NSURL *)aUrl;
 
 @property (readwrite, copy) NSString *title;

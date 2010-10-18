@@ -16,6 +16,7 @@
 #import <TagLib/mpegfile.h>
 #import <TagLib/id3v1tag.h>
 #import <TagLib/id3v2tag.h>
+#import <TagLib/id3v2framefactory.h>
 
 
 @implementation MusicFileInfo
@@ -37,14 +38,11 @@
 		if (fileRef.isNull()) {
 			return nil;
 		}
-		TagLib::Tag *tag = fileRef.tag();
+		
 		NSString *extension = [aUrl pathExtension];
-		if ([extension isEqualToString:@"mp3"]) {
-			[self mp3Info:aUrl encoding:anEncoding];
+		if ([[extension lowercaseString] isEqualToString:@"mp3"]) {
+			[self readMPEGInfo:aUrl encoding:anEncoding];
 		}
-				
-		self.track = tag->track();
-		self.year = tag->year();
 	}
 			
 	return self;
@@ -52,13 +50,20 @@
 
 - (void)writeTags
 {
-		
+	[self writeTags:guessEncoding];
 }
 
-- (void)writeTagsWithEncoding:(CFStringEncoding)anEncoding
+- (void)writeTags:(CFStringEncoding)anEncoding
 {
-	
+	NSString *extension = [self.fileUrl pathExtension];
+	if ([[extension lowercaseString] isEqualToString:@"mp3"]) {
+		[self writeMPEGInfo:self.fileUrl encoding:anEncoding];
+	} else {
+		return;
+	}
+
 }
+
 - (void)dealloc
 {
 	[title release];
@@ -86,7 +91,7 @@
 	return [self.fileUrl isEqual:[(MusicFileInfo *)object fileUrl]];
 }
 
-- (void)mp3Info:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding
+- (void)readMPEGInfo:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding
 {
 	TagLib::MPEG::File file([[aUrl path] UTF8String]);
 	
@@ -118,7 +123,8 @@
 		self.genre = [NSString stringWithCString:tag->genre().toCString()
 										encoding:CFStringConvertEncodingToNSStringEncoding(anEncoding)];
 	}
-	
+	self.track = tag->track();
+	self.year = tag->year();
 
 }
 
@@ -136,6 +142,31 @@
 	
 	[fileHandle closeFile];
 	return NO;
+}
+
+- (void)writeMPEGInfo:(NSURL *)aUrl encoding:(CFStringEncoding)anEncoding
+{
+	TagLib::MPEG::File file([[aUrl path] UTF8String]);
+	
+	TagLib::Tag *tag;
+	
+	if ([self hasID3v2Tag:aUrl]) {
+		tag = file.ID3v2Tag();
+	}else {
+		tag = file.ID3v2Tag(true);
+	}
+	
+	tag->setTitle(TagLib::String([[self title] UTF8String], TagLib::String::UTF8));
+	tag->setArtist(TagLib::String([[self artist] UTF8String], TagLib::String::UTF8));
+	tag->setAlbum(TagLib::String([[self album] UTF8String], TagLib::String::UTF8));
+	tag->setGenre(TagLib::String([[self genre] UTF8String], TagLib::String::UTF8));
+	
+	TagLib::ID3v2::FrameFactory *frameFactory = TagLib::ID3v2::FrameFactory::instance();
+	frameFactory->setDefaultTextEncoding(TagLib::String::UTF8);
+	file.setID3v2FrameFactory(frameFactory);
+	
+	file.save();
+	
 }
 
 @synthesize title;
