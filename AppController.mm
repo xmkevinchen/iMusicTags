@@ -18,14 +18,11 @@
 {
 	[tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType,nil]];
 	
-	// Initialize Encoding Menu 
-	[self initEncodingMenu];
+	NSMutableArray *content = [[NSMutableArray alloc] initWithObjects:[[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
+																								  description:@""], nil];
+	[content addObjectsFromArray:[CharacterCatalog catalogs]];						   
 	
-	// Initialize Encoding Popup Button 
-	[self initEncodingPopUpButton];
-	
-	[btnEncodingCatalog selectItemWithTag:C_CATALOG_CHOOSE];
-	[self chooseCatalog:btnEncodingCatalog];	
+	[catalogCtrl setContent:content];
 }
 
 - (id)init
@@ -241,95 +238,25 @@
 	NSBeep();
 }
 
-/**
- * Initialize the Encoding Menu Item with specified character encoding
- */
-- (void)initEncodingMenu
-{
-	NSMenuItem *newItem;
-	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
-	
-	[mEncoding setAutoenablesItems:NO];
-	
-	for (CharacterCatalog *c in [CharacterCatalog catalogs]) {
-		NSMenuItem *menuItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] init];
-		[menuItem setTitle:[c description]];
-		[menuItem setTag:[c catalogValue]];
-		
-		NSMenu *menu = [[NSMenu allocWithZone:[NSMenu menuZone]] initWithTitle:[c description]];
-		[menuItem setSubmenu:menu];
-		
-		for (CharacterEncoding *e in [util encodings:[c catalogValue]]) {
-			newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[e description]
-																		   action:@selector(chooseEncoding:) 
-																	keyEquivalent:@""];
-			[newItem setTag:[e encodingCode]];
-			[newItem setTarget:self];
-			[menu addItem:newItem];
-		}
-		
-		[mEncoding addItem:menuItem];
-	}
-}
-
-/*!
- @method initEncodingPopUpButton    
- @abstract   Initialize the Encoding Popup Button with specified character encoding
- @discussion 
- */
-- (void)initEncodingPopUpButton
-{
-	
-	NSMenuItem *newItem;
-	
-	for (CharacterCatalog *c in [CharacterCatalog catalogs]) 
-	{
-		newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[c description]
-																		action:@selector(chooseCatalog:)
-																 keyEquivalent:@""];
-		[newItem setTarget:self];
-		[newItem setTag:[c catalogValue]];
-		[[btnEncodingCatalog menu] addItem:newItem];
-	}
-	[btnEncodingCatalog sizeToFit];
-	
-}
 
 - (IBAction)chooseEncoding:(id)sender
 {
-	NSMenuItem *item = (NSMenuItem *)sender;
-	if ([item parentItem]) {
-		[btnEncodingCatalog selectItemWithTag:[[item parentItem] tag]];
-		[self chooseCatalog:[item parentItem]];
-	}
-	[btnEncoding selectItemWithTag:[(NSMenuItem *)sender tag]];
-	[self setEncoding:[(NSMenuItem *)sender tag]];
+	NSInteger selectedEncoding = [[[encodingCtrl selection] valueForKey:@"encodingCode"] intValue];
+	encoding = selectedEncoding;
 }
 
-- (IBAction)chooseCatalog:(id)sender
-{
-	[[btnEncoding menu] removeAllItems];
-	
-	NSMenuItem *newItem;
-	
-	newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@""
-																   action:nil
-															keyEquivalent:@""];
-	[[btnEncoding menu] addItem:newItem];
-	
-	
+- (IBAction)chooseCatalog:(id)sender {
 	CharacterEncodingUtil *util = [[CharacterEncodingUtil alloc] init];
-	NSInteger aValue = [(NSMenuItem *)sender tag];
-	for (CharacterEncoding *e in [util encodings:aValue]) {
-		newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:[e description]
-																	   action:@selector(chooseEncoding:)
-																 keyEquivalent:@""];
-		[newItem setTag:[e encodingCode]];
-		[newItem setTarget:self];
-		[[btnEncoding menu] addItem:newItem];
-	}
+	NSInteger catalogType = [[[catalogCtrl selection] valueForKey:@"catalogType"] intValue];
 	
-	[btnEncoding sizeToFit];
+	NSMutableArray *content = [[NSMutableArray alloc] initWithObjects:
+							   [[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingInvalidId 
+																desciption:@"" 
+																	  type:catalogType], nil];
+	
+	
+	[content addObjectsFromArray:[util encodings:catalogType]];
+	[encodingCtrl setContent:content];
 }
 
 @end
