@@ -13,7 +13,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="367"/>
-			<integer value="81"/>
+			<integer value="29"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -204,9 +204,9 @@
 			<object class="NSWindowTemplate" id="513744381">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{217, 252}, {971, 481}}</string>
+				<string key="NSWindowRect">{{220, 189}, {971, 481}}</string>
 				<int key="NSWTFlags">611844096</int>
-				<string key="NSWindowTitle">Music Information List</string>
+				<string key="NSWindowTitle">Music Information</string>
 				<string key="NSWindowClass">NSWindow</string>
 				<nil key="NSViewClass"/>
 				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
@@ -489,7 +489,6 @@
 									<int key="NSvFlags">-2147483392</int>
 									<string key="NSFrame">{{1, 326}, {851, 15}}</string>
 									<reference key="NSSuperview" ref="901798145"/>
-									<bool key="NSEnabled">YES</bool>
 									<int key="NSsFlags">1</int>
 									<reference key="NSTarget" ref="901798145"/>
 									<string key="NSAction">_doScroller:</string>
@@ -514,7 +513,7 @@
 							<string key="NSFrame">{{7, 61}, {958, 413}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<reference key="NSNextKeyView" ref="912233310"/>
-							<int key="NSsFlags">690</int>
+							<int key="NSsFlags">562</int>
 							<reference key="NSVScroller" ref="842579796"/>
 							<reference key="NSHScroller" ref="429529506"/>
 							<reference key="NSContentView" ref="912233310"/>
@@ -565,7 +564,7 @@
 						<object class="NSTextField" id="297594926">
 							<reference key="NSNextResponder" ref="414427165"/>
 							<int key="NSvFlags">262</int>
-							<string key="NSFrame">{{4, 26}, {66, 17}}</string>
+							<string key="NSFrame">{{9, 26}, {66, 17}}</string>
 							<reference key="NSSuperview" ref="414427165"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="14667669">
@@ -680,7 +679,7 @@
 				<string key="NSScreenRect">{{0, 0}, {1440, 878}}</string>
 				<string key="NSMinSize">{971, 503}</string>
 				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
-				<string key="NSFrameAutosaveName">Music Information List</string>
+				<string key="NSFrameAutosaveName">Music Information</string>
 			</object>
 			<object class="NSCustomObject" id="1066869227">
 				<string key="NSClassName">AppController</string>
@@ -981,8 +980,8 @@
 							<reference ref="965098080"/>
 							<reference ref="58234429"/>
 							<reference ref="442067802"/>
-							<reference ref="297594926"/>
 							<reference ref="421936811"/>
+							<reference ref="297594926"/>
 						</object>
 						<reference key="parent" ref="513744381"/>
 					</object>
@@ -1402,9 +1401,9 @@
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{11, 977}, {478, 20}}</string>
-					<string>{{63, 371}, {971, 481}}</string>
+					<string>{{105, 213}, {971, 481}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{63, 371}, {971, 481}}</string>
+					<string>{{105, 213}, {971, 481}}</string>
 					<integer value="1"/>
 					<string>{{11, 666}, {480, 270}}</string>
 					<boolean value="YES"/>

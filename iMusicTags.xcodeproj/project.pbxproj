@@ -12,7 +12,6 @@
 		0A2CCF6011F9AA7D00CB3746 /* AppController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A2CCF5F11F9AA7D00CB3746 /* AppController.mm */; };
 		0A2CCF6411F9AABB00CB3746 /* MusicFileInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A2CCF6311F9AABB00CB3746 /* MusicFileInfo.mm */; };
 		0A465078123539760031DB09 /* TagLib.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A465077123539760031DB09 /* TagLib.framework */; };
-		0A46507A123539760031DB09 /* UniversalDetector.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A465079123539760031DB09 /* UniversalDetector.framework */; };
 		0A4650E3123539880031DB09 /* TagLib.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 0A465077123539760031DB09 /* TagLib.framework */; };
 		0AA7121D121D7D70007D755C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AA7121C121D7D70007D755C /* MainMenu.xib */; };
 		0AA71224121D8015007D755C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0AA71222121D8015007D755C /* Localizable.strings */; };
@@ -46,7 +45,6 @@
 		0A2CCF6211F9AABB00CB3746 /* MusicFileInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicFileInfo.h; sourceTree = "<group>"; };
 		0A2CCF6311F9AABB00CB3746 /* MusicFileInfo.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MusicFileInfo.mm; sourceTree = "<group>"; };
 		0A465077123539760031DB09 /* TagLib.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TagLib.framework; path = "Third party Frameworks/TagLib.framework"; sourceTree = "<group>"; };
-		0A465079123539760031DB09 /* UniversalDetector.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UniversalDetector.framework; path = "Third party Frameworks/UniversalDetector.framework"; sourceTree = "<group>"; };
 		0AA71223121D8015007D755C /* English */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/Localizable.strings; sourceTree = "<group>"; };
 		0AE29D9812240655005C154A /* CharacterEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CharacterEncoding.h; sourceTree = "<group>"; };
 		0AE29D9912240655005C154A /* CharacterEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CharacterEncoding.m; sourceTree = "<group>"; };
@@ -71,7 +69,6 @@
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
 				0A1BE12011F06B6E00A3F58F /* AudioToolbox.framework in Frameworks */,
 				0A465078123539760031DB09 /* TagLib.framework in Frameworks */,
-				0A46507A123539760031DB09 /* UniversalDetector.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -159,7 +156,6 @@
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 				0A465077123539760031DB09 /* TagLib.framework */,
-				0A465079123539760031DB09 /* UniversalDetector.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -310,10 +306,7 @@
 				GCC_PREFIX_HEADER = iMusicTags_Prefix.pch;
 				INFOPLIST_FILE = "iMusicTags-Info.plist";
 				INSTALL_PATH = "$(HOME)/Applications";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"\"$(SRCROOT)/taglib/lib\"",
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = iMusicTags;
 			};
 			name = Release;

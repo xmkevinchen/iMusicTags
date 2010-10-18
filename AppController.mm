@@ -312,7 +312,7 @@
 	
 	NSMenuItem *newItem;
 	
-	newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@""
+	newItem = [[NSMenuItem allocWithZone:[NSMenu menuZone]] initWithTitle:@"      "
 																   action:nil
 															keyEquivalent:@""];
 	[[btnEncoding menu] addItem:newItem];
