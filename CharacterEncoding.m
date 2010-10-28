@@ -15,7 +15,7 @@
 @synthesize encodingType;
 @synthesize encodingCode;
 
-- (id)initWithCode:(CFStringEncoding)anEncodingCode desciption:(NSString *)aDescription type:(NSInteger)aType
+- (id)initWithEncoding:(CFStringEncoding)anEncodingCode desciption:(NSString *)aDescription type:(NSInteger)aType
 {
 	if ([super init]) {
 		[self setEncodingType:aType];
@@ -41,7 +41,7 @@
 - (id)initWithValue:(NSInteger)aValue description:(NSString *)aDescription
 {
 	if ([super init]) {
-		[self setCatalogValue:aValue];
+		[self setCatalogType:aValue];
 		[self setDescription:aDescription];
 		
 		return self;
@@ -54,8 +54,8 @@
 	NSMutableArray *catalogs = [[NSMutableArray alloc] init];
 	
 	// Choose Catalog mention
-	[catalogs addObject:[[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
-													description:@"          "]];
+	//[catalogs addObject:[[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
+//													description:@"          "]];
 	
 	// Simplified Chinese
 	[catalogs addObject:[[CharacterCatalog alloc] initWithValue:C_SIMPLIFIED_CHINESE
@@ -69,7 +69,7 @@
 					
 }
 
-@synthesize catalogValue;
+@synthesize catalogType;
 @synthesize description;
 
 @end
@@ -100,16 +100,16 @@
 	NSMutableArray *encodings = [[NSMutableArray alloc] init];
 	
 	// GB18030
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingGB_18030_2000
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingGB_18030_2000
 													  desciption:@"18030"
 															type:C_SIMPLIFIED_CHINESE]];
 	// GBK
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingGBK_95
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingGBK_95
 													  desciption:@"GBK" 
 															type:C_SIMPLIFIED_CHINESE]];
 	
 	// GB2312
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingGB_2312_80
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingGB_2312_80
 													  desciption:@"2312"
 															type:C_SIMPLIFIED_CHINESE]];
 	return encodings;
@@ -119,13 +119,13 @@
 {
 	NSMutableArray *encodings = [[NSMutableArray alloc] init];
 	
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingBig5
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingBig5
 													  desciption:@"BIG5"
 															type:C_TRADITIONAL_CHINESE]];
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingBig5_E
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingBig5_E
 													  desciption:@"BIG5_E"
 															type:C_TRADITIONAL_CHINESE]];
-	[encodings addObject:[[CharacterEncoding alloc] initWithCode:kCFStringEncodingBig5_HKSCS_1999
+	[encodings addObject:[[CharacterEncoding alloc] initWithEncoding:kCFStringEncodingBig5_HKSCS_1999
 													  desciption:@"BIG5_HKSCS" 
 															type:C_TRADITIONAL_CHINESE]];
 	
