@@ -26,19 +26,20 @@ enum E_CharacterCatalog {
 @property NSInteger encodingCode;
 @property(readwrite, copy) NSString *description;
 
-- (id) initWithCode:(CFStringEncoding)anEncodingCode desciption:(NSString *)aDescription type:(NSInteger)aType;
+- (id)initWithEncoding:(CFStringEncoding)anEncodingCode desciption:(NSString *)aDescription type:(NSInteger)aType;
 
 @end
 
 @interface CharacterCatalog : NSObject
 {
 	NSString *description;
-	NSInteger catalogValue;
+	NSInteger catalogType;
 }
 
-@property NSInteger catalogValue;
+@property NSInteger catalogType;
 @property(readwrite, copy)NSString *description;
 
+- (id)initWithValue:(NSInteger)aValue description:(NSString *)aDescription;
 + (NSArray *)catalogs;
 
 @end

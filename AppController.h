@@ -18,11 +18,13 @@
 	IBOutlet NSButton *confirm;
 	IBOutlet NSPopUpButton *btnEncodingCatalog;
 	IBOutlet NSPopUpButton *btnEncoding;
-	IBOutlet NSMenu *mEncoding;
-	IBOutlet NSMenuItem *miEncoding;
-	IBOutlet NSControl *deleteControl;
-	
+
 	CFStringEncoding encoding;
+
+	IBOutlet NSArrayController *catalogCtrl;
+	IBOutlet NSArrayController *encodingCtrl;
+	IBOutlet NSControl *deleteControl;
+
 }
 
 - (IBAction)open:(id)sender;
@@ -32,8 +34,6 @@
 - (IBAction)chooseEncoding:(id)sender;
 - (IBAction)chooseCatalog:(id)sender;
 
-- (void)initEncodingMenu;
-- (void)initEncodingPopUpButton;
 
 @property CFStringEncoding encoding;
 
