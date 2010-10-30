@@ -12,7 +12,12 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+<<<<<<< HEAD
 			<integer value="367"/>
+=======
+			<integer value="29"/>
+			<integer value="368"/>
+>>>>>>> 7cc6aab7301982e68e58040243f8dcb77409bfdf
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1708,9 +1713,15 @@
 					<integer value="1"/>
 					<string>{74, 862}</string>
 					<string>{{11, 977}, {478, 20}}</string>
+<<<<<<< HEAD
 					<string>{{23, 137}, {971, 481}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{23, 137}, {971, 481}}</string>
+=======
+					<string>{{409, 137}, {971, 481}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{409, 137}, {971, 481}}</string>
+>>>>>>> 7cc6aab7301982e68e58040243f8dcb77409bfdf
 					<integer value="1"/>
 					<string>{{11, 666}, {480, 270}}</string>
 					<boolean value="YES"/>
