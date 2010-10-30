@@ -24,6 +24,8 @@
 	IBOutlet NSArrayController *catalogCtrl;
 	IBOutlet NSArrayController *encodingCtrl;
 	IBOutlet NSControl *deleteControl;
+	
+	IBOutlet NSWindow *window;
 
 }
 
@@ -33,8 +35,10 @@
 - (IBAction)convert:(id)sender;
 - (IBAction)chooseEncoding:(id)sender;
 - (IBAction)chooseCatalog:(id)sender;
+- (IBAction)newWindow:(id)sender;
 
 
 @property CFStringEncoding encoding;
+@property(assign) NSWindow *window;
 
 @end

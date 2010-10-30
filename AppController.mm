@@ -12,17 +12,21 @@
 
 @implementation AppController
 
-@synthesize encoding;
+@synthesize encoding, window;
 
 - (void)awakeFromNib
 {
+	[window setReleasedWhenClosed:NO];
+	
 	[tableView registerForDraggedTypes:[NSArray arrayWithObjects:NSFilenamesPboardType,nil]];
 	
-	NSMutableArray *content = [[NSMutableArray alloc] initWithObjects:[[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
-																								  description:@""], nil];
+	NSMutableArray *content = [[NSMutableArray alloc] initWithObjects:
+                               [[CharacterCatalog alloc] initWithValue:C_CATALOG_CHOOSE
+                                                           description:@""], nil];
 	[content addObjectsFromArray:[CharacterCatalog catalogs]];						   
 	
 	[catalogCtrl setContent:content];
+	
 }
 
 - (id)init
@@ -257,6 +261,23 @@
 	
 	[content addObjectsFromArray:[util encodings:catalogType]];
 	[encodingCtrl setContent:content];
+}
+
+- (IBAction)newWindow:(id)sender{
+	[window makeKeyAndOrderFront:self];	
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication*)theApplication
+					hasVisibleWindows:(BOOL)flag{
+	[window orderFront:nil];
+	return TRUE;
+}
+
+- (void)windowWillClose:(NSNotification *)notification {
+	[fileSet removeAllObjects];
+	[fileUrls removeAllObjects];
+	[displayInfo removeAllObjects];
+	[tableView reloadData];
 }
 
 @end
