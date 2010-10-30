@@ -16,7 +16,6 @@
 		0AA7121D121D7D70007D755C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AA7121C121D7D70007D755C /* MainMenu.xib */; };
 		0AA71224121D8015007D755C /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0AA71222121D8015007D755C /* Localizable.strings */; };
 		0AE29D9A12240655005C154A /* CharacterEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AE29D9912240655005C154A /* CharacterEncoding.m */; };
-		256AC3DA0F4B6AC300CF3369 /* MusicTagsAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 256AC3D90F4B6AC300CF3369 /* MusicTagsAppDelegate.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
@@ -51,8 +50,6 @@
 		0AEDD07E11F9D7FC005E2B4B /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
-		256AC3D80F4B6AC300CF3369 /* MusicTagsAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicTagsAppDelegate.h; sourceTree = "<group>"; };
-		256AC3D90F4B6AC300CF3369 /* MusicTagsAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicTagsAppDelegate.m; sourceTree = "<group>"; };
 		256AC3F00F4B6AF500CF3369 /* iMusicTags_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iMusicTags_Prefix.pch; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -80,8 +77,6 @@
 			children = (
 				0A2CCF6211F9AABB00CB3746 /* MusicFileInfo.h */,
 				0A2CCF6311F9AABB00CB3746 /* MusicFileInfo.mm */,
-				256AC3D80F4B6AC300CF3369 /* MusicTagsAppDelegate.h */,
-				256AC3D90F4B6AC300CF3369 /* MusicTagsAppDelegate.m */,
 				0A2CCF5E11F9AA7D00CB3746 /* AppController.h */,
 				0A2CCF5F11F9AA7D00CB3746 /* AppController.mm */,
 				0AE29D9812240655005C154A /* CharacterEncoding.h */,
@@ -230,7 +225,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
-				256AC3DA0F4B6AC300CF3369 /* MusicTagsAppDelegate.m in Sources */,
 				0A2CCF6011F9AA7D00CB3746 /* AppController.mm in Sources */,
 				0A2CCF6411F9AABB00CB3746 /* MusicFileInfo.mm in Sources */,
 				0AE29D9A12240655005C154A /* CharacterEncoding.m in Sources */,
