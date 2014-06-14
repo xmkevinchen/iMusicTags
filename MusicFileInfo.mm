@@ -64,14 +64,6 @@
 
 }
 
-- (void)dealloc
-{
-	[title release];
-	[artist release];
-	[album release];
-	[genre release];
-	[super dealloc];
-}
 
 - (NSUInteger)hash
 {
@@ -134,7 +126,7 @@
 	NSFileHandle *fileHandle = [NSFileHandle fileHandleForReadingFromURL:aUrl error:&error];
 	[fileHandle seekToFileOffset:0L];
 	NSData *data = [fileHandle readDataOfLength:3];
-	NSString *id3v2id = [[NSString alloc] initWithCString:(const char *)[data bytes]];
+	NSString *id3v2id = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	if ([id3v2id isEqual:@"ID3"]) {
 		[fileHandle closeFile];
 		return YES;

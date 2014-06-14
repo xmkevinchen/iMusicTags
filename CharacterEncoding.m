@@ -28,11 +28,6 @@
 	return nil;
 }
 
-- (void)dealloc
-{
-	[super dealloc];
-	[description release];
-}
 
 @end
 

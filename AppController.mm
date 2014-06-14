@@ -47,9 +47,6 @@
 	
 	if ([panel runModal] == NSOKButton) {
 		
-		if (displayInfo) {
-			[displayInfo release];
-		}
 		
 		displayInfo = [[NSMutableArray alloc] init];
 		fileUrls = [[NSMutableArray alloc] init];
@@ -170,12 +167,10 @@
 							 informativeTextWithFormat:@"Please choose an encoding before preview music information"];
 		[alert setIcon:imageObj];
 		[alert runModal];
-		[alert release];
 		return;
 		
 	}
 	
-	[displayInfo release];
 	displayInfo = [[NSMutableArray alloc] init];
 	
 	for (NSURL *url in fileUrls) {
@@ -226,7 +221,6 @@
 							 informativeTextWithFormat:@"Please choose an encoding before convert music information"];
 		[alert setIcon:imageObj];
 		[alert runModal];
-		[alert release];
 		return;
 	}
 	

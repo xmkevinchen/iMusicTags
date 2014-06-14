@@ -25,7 +25,7 @@
 	IBOutlet NSArrayController *encodingCtrl;
 	IBOutlet NSControl *deleteControl;
 	
-	IBOutlet NSWindow *window;
+	IBOutlet NSWindow *__strong window;
 
 }
 
@@ -39,6 +39,6 @@
 
 
 @property CFStringEncoding encoding;
-@property(assign) NSWindow *window;
+@property(strong) NSWindow *window;
 
 @end
